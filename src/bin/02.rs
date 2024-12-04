@@ -13,7 +13,7 @@ fn main() -> Result<()> {
 
 // Recursive testing to see if the list is OK
 fn is_ok(previous: i32, rest: &[i32], ascending: bool, allow_error: bool, has_error: bool) -> bool {
-    eprintln!("\tprev:{previous} rest:{rest:?}");
+    //eprintln!("\tprev:{previous} rest:{rest:?}");
     if rest.is_empty() {
         return true;
     }
@@ -103,13 +103,7 @@ fn part_2_brute(input: &str) -> Result<usize> {
                 .map(|chunk| chunk.parse::<i32>().unwrap())
                 .collect_vec();
 
-            let asc = is_ok(levels[0], &levels[1..levels.len()], true, true, false);
-            let dsc = is_ok(levels[0], &levels[1..levels.len()], false, true, false);
-
-            let f1 = asc || dsc;
-
             let mut f2 = false;
-            let mut s = (-1, 0);
             for skip in 0..levels.len() {
                 let skipped = [&levels[0..skip], &levels[(skip + 1)..levels.len()]].concat();
                 let asc = is_ok(skipped[0], &skipped[1..skipped.len()], true, false, false);
@@ -117,16 +111,11 @@ fn part_2_brute(input: &str) -> Result<usize> {
 
                 if asc || dsc {
                     f2 = true;
-                    s = (levels[skip], skip);
                     break;
                 }
             }
 
-            if f1 != f2 {
-                eprintln!("smart_ok:{f1} brute_ok:{f2} (skipped {s:?}): {levels:?}");
-            }
-
-            (levels, f2 && f1)
+            (levels, f2)
         })
         .filter(|(_, is_safe)| *is_safe)
         .count())

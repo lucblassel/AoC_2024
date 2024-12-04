@@ -5,8 +5,8 @@ const INPUT: &str = include_str!("../../inputs/03.txt");
 
 fn main() -> Result<()> {
     println!("Day 03:");
-    println!("\t-1: {}", part1(INPUT)?);
-    println!("\t-2: {}", part2(INPUT)?);
+    println!("\t1: {}", part1(INPUT)?);
+    println!("\t2: {}", part2(INPUT)?);
 
     Ok(())
 }
